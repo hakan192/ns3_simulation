@@ -1,0 +1,24 @@
+function BellmanFord(Graph, source):
+    distance[source] = 0
+
+    // Step 1: Initialization
+    for each vertex v in Graph:
+        if v != source:
+            distance[v] = infinity
+        predecessor[v] = undefined
+
+    // Step 2: Relaxation
+    for i from 1 to number of vertices - 1:
+        for each edge (u, v) with weight w in Graph:
+            if distance[u] + w < distance[v]:
+                distance[v] = distance[u] + w
+                predecessor[v] = u
+
+    // Step 3: Check for negative-weight cycles
+    for each edge (u, v) with weight w in Graph:
+        if distance[u] + w < distance[v]:
+            return "Graph contains a negative-weight cycle"
+
+    return distance, predecessor
+======================================================
+

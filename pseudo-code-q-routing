@@ -1,0 +1,17 @@
+function QRouting(Graph, source, destination, num_episodes, learning_rate, discount_factor):
+    // Step 1: Initialization
+    Q = initializeQValues(Graph) // Initialize Q-values for all state-action pairs
+    for episode in 1 to num_episodes:
+        currentState = source
+        while currentState != destination:
+            // Step 2: Action selection
+            action = selectAction(currentState, Q) // Select an action based on exploration-exploitation trade-off
+
+            // Step 3: Update Q-values
+            nextState = getNextState(currentState, action) // Transition to the next state based on the selected action
+            reward = getReward(currentState, action, nextState) // Get the reward for the action in the current state
+            Q[currentState][action] = Q[currentState][action] + learning_rate * (reward + discount_factor * max(Q[nextState]) - Q[currentState][action])
+
+            currentState = nextState
+
+    return Q

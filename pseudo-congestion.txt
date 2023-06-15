@@ -1,0 +1,39 @@
+Initialize:
+- Q-table: Initialize Q(s, a) arbitrarily for all state-action pairs (s, a)
+- Initialize congestion information for all links in the network
+- Set learning rate (alpha), discount factor (gamma), and exploration rate (epsilon)
+
+Repeat until convergence:
+    Choose a source node s and a destination node d
+    
+    Initialize the episode:
+    - Set current state to s
+    - Repeat until reaching the destination node d:
+        - Choose an action a using an epsilon-greedy policy based on Q-table
+        
+        - Update the congestion information:
+            - Calculate the congestion level of the chosen link based on current traffic
+            - Update the congestion information for the chosen link
+            
+        - Move to the next state s' based on the chosen action a
+        
+        - Calculate the maximum Q-value for the next state:
+            - Find all feasible actions from state s'
+            - Calculate the Q-value for each action based on the Q-table
+            
+        - Update the Q-value for the current state-action pair:
+            - Calculate the reward based on the congestion level of the chosen link
+            - Update the Q-value using the Q-learning update rule:
+                Q(s, a) = (1 - alpha) * Q(s, a) + alpha * (reward + gamma * max(Q(s', a')))
+        
+        - Update the current state to the next state: s = s'
+        
+        - Update the exploration rate:
+            - Reduce the exploration rate (epsilon) over time to shift from exploration to exploitation
+    
+    Update the congestion information for all links based on the current traffic
+    
+    Check for convergence:
+    - If the Q-table values have converged, stop the learning process
+    
+Return the learned Q-table
